@@ -20,6 +20,12 @@
                     <p>
                         <em>Created By <%= movieground.author.username %></em>
                     </p>
+                    <% if(currentUser && movieground.author.id.equals(currentUser._id)){ %>
+                    <a class="btn btn-xs btn-warning" href="/moviegrounds/<%= movieground._id %>/edit">Edit</a>
+                    <form id ="deleteForm" action="/moviegrounds/<%= movieground._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Delete</button>
+                    </form>
+                    <% } %>
                 </div>
             </div>
             <div class="well">
