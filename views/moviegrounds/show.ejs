@@ -40,7 +40,13 @@
                             <span class="pull-right">10 days ago</span>
                             <p>
                                 <%= comment.text %>
-                            </p> 
+                            </p>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                                <a class="btn btn-xs btn-warning" href="/moviegrounds/<%= movieground._id %>/comments/<%=comment._id%>/edit">Edit</a>
+                                <form id ="deleteForm" action="/moviegrounds/<%= movieground._id %>/comments/<%=comment._id%>/?_method=DELETE" method="POST">
+                                    <input type ="submit" class="btn btn-xs btn-danger" value="Delete">
+                                </form>
+                            <% } %>
                         </div>
                     </div>
                       

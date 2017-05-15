@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Movieground = require("../models/movieground");
+var middleware = require("../middleware");
 
 //INDEX - show all moviegrounds
 router.get("/",function(req,res){
@@ -14,7 +15,7 @@ router.get("/",function(req,res){
 });
 
 //CREATE - add new movieground to DB
-router.post("/", isLoggedIn, function(req,res){
+router.post("/", middleware.isLoggedIn, function(req,res){
     // get data form form and add moviegrounds array
     //redirect back to moviegrounds
     var name = req.body.name;
@@ -38,7 +39,7 @@ router.post("/", isLoggedIn, function(req,res){
 });
 
 //NEW - show form
-router.get("/new", isLoggedIn, function(req,res){
+router.get("/new", middleware.isLoggedIn, function(req,res){
     res.render("moviegrounds/new");
 });
 
@@ -55,7 +56,7 @@ router.get("/:id",function(req,res){
 });
 
 //Edit movieground route
-router.get("/:id/edit", checkMoviegroundOwnership, function(req,res){
+router.get("/:id/edit", middleware.checkMoviegroundOwnership, function(req,res){
     //is user logged in
     Movieground.findById(req.params.id,function(err,foundMovieground){
         res.render("moviegrounds/edit",{movieground: foundMovieground});
@@ -63,7 +64,7 @@ router.get("/:id/edit", checkMoviegroundOwnership, function(req,res){
 });
 
 //Update movieground
-router.put("/:id",checkMoviegroundOwnership , function(req,res){
+router.put("/:id",middleware.checkMoviegroundOwnership , function(req,res){
     Movieground.findById(req.params.id,function(err,foundMovieground){
         // find and update the correct movie
         
@@ -78,7 +79,7 @@ router.put("/:id",checkMoviegroundOwnership , function(req,res){
 });
 
 //Destroy movie route
-router.delete("/:id",checkMoviegroundOwnership, function(req,res){
+router.delete("/:id",middleware.checkMoviegroundOwnership, function(req,res){
     Movieground.findByIdAndRemove(req.params.id,function(err){
         if (err){
             res.redirect("/moviegrounds");
@@ -90,34 +91,5 @@ router.delete("/:id",checkMoviegroundOwnership, function(req,res){
 
 
 
-
-
-//middleware
-function isLoggedIn(req,res,next){
-    if (req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
-
-function checkMoviegroundOwnership(req,res,next){
-    if (req.isAuthenticated()){
-        Movieground.findById(req.params.id,function(err,foundMovieground){
-        if (err){
-            console.log(err);
-            res.redirect("back");
-        }else{
-            if (foundMovieground.author.id.equals(req.user._id)){
-                next();        
-            } else{
-                res.send("You don't have permission to send");
-            }
-            
-        }
-        });    
-    } else{
-        res.redirect("back");
-    }    
-}
 
 module.exports = router;

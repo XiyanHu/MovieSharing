@@ -21,9 +21,11 @@ router.post("/register",function(req,res){
     User.register(newUser,req.body.password,function(err,user){
         if (err){
             console.log(err);
+            req.flash("error",err.message);
             return res.render("register");
         }
         passport.authenticate("local")(req,res,function(){
+           req.flash("success","Welcome to MovieSharing! " + user.username);
            res.redirect("/moviegrounds"); 
         });
     });
@@ -38,23 +40,20 @@ router.get("/login",function(req,res){
 router.post("/login",passport.authenticate("local",
     {
         successRedirect: "/moviegrounds",
-        failureRedirect: "/login"
+        failureRedirect: "/login",
+        failureFlash: 'Invalid username or password.'
     }),function(req,res){
+     
+           
     
 });
 
 //logout rout
 router.get("/logout",function(req,res){
     req.logout();
+    req.flash("success","Logged Out!");
     res.redirect("/moviegrounds");
 });
 
-//middleware
-function isLoggedIn(req,res,next){
-    if (req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
 
 module.exports = router;
