@@ -5,3 +5,13 @@
 #deleteForm{
     display: inline;
 }
+
+#facebookBtn{
+    padding-top:10px;
+    padding-left: 10%;
+    text-align: center;
+}
+
+#LeftGoBackBtn{
+    text-align: center;
+}

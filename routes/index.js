@@ -43,9 +43,8 @@ router.post("/login",passport.authenticate("local",
         failureRedirect: "/login",
         failureFlash: 'Invalid username or password.'
     }),function(req,res){
-     
-           
-    
+        console.log(req.session.returnTo);
+
 });
 
 //logout rout
