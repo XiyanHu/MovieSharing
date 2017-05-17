@@ -49,18 +49,16 @@ app.use("/",indexRoutes);
 app.use("/moviegrounds",moviegroundRoutes);
 app.use("/moviegrounds/:id/comments",commentsRoutes);
 
-// Movieground.create({
-//     name: "The Dark Knight",
-//     image: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg",
-//     description: "The most successful superhero movie"
-//     },function(err,movieground){
-//         if (err){
-//             console.log("error");    
-//         }   else{
-//             console.log("Newly one");
-//             console.log(movieground);
-//         } 
-//     });
+app.locals['datediff'] = function(date1) {
+    var one_day=1000*60*60*24;
+    // Convert both dates to milliseconds
+    var date1_ms = date1.getTime();
+    var date2_ms = new Date().getTime();
+    // Calculate the difference in milliseconds
+    var difference_ms = date2_ms - date1_ms;
+    // Convert back to days and return
+    return Math.round(difference_ms/one_day); 
+}
 
     var moviegrounds = [
             {name: "The Dark Knight",image: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg"},
