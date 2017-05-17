@@ -5,9 +5,19 @@
         <div class="col-md-3">
                 <p class="lead">MoiveSharing</p>
                 <div class="list-group">
-                    <li class="list-group-item active">Info 1</li>
-                    <li class="list-group-item">Info 2</li>
-                    <li class="list-group-item">Info 3</li>
+                    <li class="list-group-item active">Basic Information</li>
+                    <li class="list-group-item">Coming Soon...</li>
+                    <li class="list-group-item">Coming Soon...</li>
+                </div>
+                <div id="LeftGoBackBtn">
+                    <a class="btn btn-primary" href="/moviegrounds">Go Back!</a>    
+                </div>
+                
+                <div id="facebookBtn">
+                    <iframe src="https://www.facebook.com/plugins/share_button.php?href=https://test-xiyanhu927.c9users.io/moviegrounds/<%= movieground._id %>&layout=button_count&size=small&mobile_iframe=true&width=87&height=20&appId" width="87" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                    <iframe allowtransparency="true" frameborder="0" scrolling="no"
+                    src="https://platform.twitter.com/widgets/tweet_button.html?size=medium"
+                    style="width:87px; height:20px;"></iframe>
                 </div>
         </div> 
         <div class="col-md-9">
@@ -37,8 +47,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <strong><%= comment.author.username %></strong>
-                            <span class="pull-right">10 days ago</span>
-                           
+                            <!--<span class="pull-right">10 days ago</span>-->
+                            <span class="pull-right"><%= datediff(comment.date) %> days ago</span>
                             <p>
                                 <%= comment.text %>
                             </p>
