@@ -15,8 +15,11 @@ var commentsRoutes = require("./routes/comments"),
     moviegroundRoutes = require("./routes/moviegrounds"),
     indexRoutes = require("./routes/index");
     
-    
-mongoose.connect("mongodb://localhost/movie_sharing");
+
+
+var dburl = process.env.DATABASEURL || "mongodb://localhost/movie_sharing"
+mongoose.connect(dburl);
+
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine","ejs");
 app.use(express.static(__dirname + "/public"));
@@ -59,7 +62,7 @@ app.locals['datediff'] = function(date1) {
     // Convert back to days and return
     return Math.round(difference_ms/one_day); 
 }
-
+    
     var moviegrounds = [
             {name: "The Dark Knight",image: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg"},
             {name: "Paycheck",image: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTczMzU5NDk4MV5BMl5BanBnXkFtZTYwNDQxNzc3._V1_UX182_CR0,0,182,268_AL_.jpg"},
